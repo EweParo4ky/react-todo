@@ -1,3 +1,15 @@
 .App {
-  text-align: center;
+  text-align: left;
+  
+}
+
+.userBr {
+  color: black;
+}
+
+.close {
+  display: flex;
+  padding-left: 20px;
+  flex-direction: column;
+  text-align: left;
 }

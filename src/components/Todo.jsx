@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { addToDo } from "../slices/todoSlice"
+
 import ToDoList from './ToDOList';
 import ToDoInput from './ToDoInput';
 // import { useDispatch } from 'react-redux';
@@ -7,49 +11,22 @@ import '../App.css';
 // import Users from './components/users';
 
 function App() {
-  const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
+  const dispatch = useDispatch();
 
-  const addToDo = () => {
-    if (text.trim().length)
-      setTodos([...todos,
-      {
-        id: new Date().toISOString(),
-        text,
-        active: true,
-        complited: false,
-      }
-      ]);
+  const addTask = () => {
+    dispatch(addToDo({ text }));
     setText('');
   };
-
-  const removeTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
-
-  const handleToogleComplited = (id) => {
-    setTodos(todos.map(
-      todo => {
-        if (todo.id !== id) {
-          return todo;
-        }
-        todo.complited = !todo.complited;
-        return todo;
-      }));
-  }
 
   return (
     <div className="App container">
       <ToDoInput
-       text={text}
-       setText={setText}
-       addToDo={addToDo}
+        text={text}
+        setText={setText}
+        addToDo={addTask}
       />
-     <ToDoList
-      todos={todos}
-      removeTodo={removeTodo}
-      handleToogleComplited={handleToogleComplited}
-      />
+      <ToDoList />
     </div>
   );
 }
